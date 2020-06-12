@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3>Kontrol Paneli</h3>
+<hr>
+<p>
+    Wilkommen , <small>{{request.user.username}} , auf mein Blog</small>
+</p>
+<hr>
+<a class = "btn btn-danger" href = "{% url 'article:addarticle' %}">Artikel Hinzufügen</a>
+<hr>
+{% if articles %}
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+      	    <th scope="col">Überschrift</th>
+            <th scope="col">Schriftsteller</th>
+            <th scope="col">Datum</th>
+            <th scope="col">Aktualisieren</th>
+            <th scope="col">Löschen</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for article in articles %}
+          <tr>
+            <th scope="row">{{article.id}}</th>
+            <td><a href="{% url 'article:detail' article.id %}">{{article.title}}</a></td>
+            <td>{{article.author.username}}</td>
+            <td>{{article.created_date}}</td>
+            <td><a href="{% url 'article:update' article.id %}" class = "btn btn-danger">Aktualisieren</a></td>
+            <td><a href="{% url 'article:delete' article.id %}" class = "btn btn-danger">Löschen</a> </td>
+              
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+{% else %}
+
+<div class = "alert alert-danger">
+    Es gibt  noch keine Artikel in diesem Panel ...
+
+</div>
+{% endif %}
+
+
+
+{% endblock body %}
+
